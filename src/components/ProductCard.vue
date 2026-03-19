@@ -47,9 +47,16 @@ defineProps(["product"]);
   .product-card .btn-menu button{
     width: 50%;
     border: none;
+    cursor: pointer;
   }
   .product-card .btn-menu .buy-btn{
     background-color: #56aa54;
-    color: #ffffff
+    color: #ffffff;
+  }
+  .product-card .btn-menu .buy-btn:hover{
+    background-color: #3e9a3d;
+  }
+  .product-card .btn-menu .add-cart-btn:hover{
+    background-color: #efefef;
   }
 </style>

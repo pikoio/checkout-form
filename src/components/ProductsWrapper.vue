@@ -13,7 +13,6 @@
 
 <style scoped>
   .products-wrapper {
-    border: 1px solid green;
     display: flex;
     gap: 1rem;
     margin-top: 3rem;
