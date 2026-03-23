@@ -1,4 +1,6 @@
 <script setup>
+import DefaultButton from "@/components/buttons/DefaultButton.vue";
+
 defineEmits(['payment-success'])
 </script>
 
@@ -30,7 +32,7 @@ defineEmits(['payment-success'])
           <input class="form-input" type="text">
         </div>
       </div>
-      <button @click="$emit('payment-success')" class="confirm-payment-btn">Confirm payment</button>
+      <DefaultButton @click="$emit('payment-success')" class="confirm-payment-btn">Confirm payment</DefaultButton>
     </form>
   </div>
 </template>
@@ -45,6 +47,7 @@ defineEmits(['payment-success'])
   }
   .payment-section .header{
     font-size: 1.4rem;
+    color: var(--color-text);
   }
   .payment-section .payment-form{
     display: flex;
@@ -55,7 +58,7 @@ defineEmits(['payment-success'])
   }
   .payment-section .payment-form .form-card .form-label{
     font-size: 0.8rem;
-    color: #53a751;
+    color: var(--color-text);
     margin-bottom: 0.2rem;
   }
   .payment-section .payment-form .form-card .form-input{
@@ -67,11 +70,11 @@ defineEmits(['payment-success'])
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: #56aa54;
+    color: var(--color-text);
     margin-bottom: 1.5rem;
   }
   .payment-section .payment-form .form-card .row-1 .error-indicator{
-    color: #ff7a6a;
+    color: var(--color-pale-red);
   }
   .payment-section .payment-form .form-card .row-1 .bank-title{
     font-size: 1.4rem;
@@ -96,33 +99,19 @@ defineEmits(['payment-success'])
   }
   .payment-section .payment-form .form-card .row-3 .divide{
     font-size: 1.3rem;
-    color: #56aa54;
-    background-color: white;
+    color: var(--color-text);
+    background-color: var(--color-white);
     height: 100%;
     display: flex;
     align-items: center;
   }
   .payment-section .payment-form .form-card .row-3 .form-input{
     width: 4rem;
-
   }
   .payment-section .payment-form .form-card .row-4{
     margin-top: 1rem;
     display: flex;
     flex-direction: column;
-  }
-  .payment-section .payment-form .confirm-payment-btn{
-    border: none;
-    background-color: #56aa54;
-    margin-top: 2rem;
-    height: 2.5rem;
-    color: white;
-    border-radius: 0.2rem;
-    font-size: 1rem;
-    cursor: pointer;
-  }
-  .payment-section .payment-form .confirm-payment-btn:hover{
-    background-color: #3e9a3d;
   }
 
 </style>

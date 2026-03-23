@@ -1,12 +1,17 @@
 <script setup>
 defineProps(["product"]);
+defineEmits(["remove-product-from-cart"]);
 </script>
 
 <template>
   <div class="product-item">
     <div class="row-1">
       <p class="name">{{ product.name }}</p>
-      <button class="remove-btn"><i class="pi pi-trash"></i></button>
+      <button
+          @click="$emit('remove-product-from-cart')"
+          class="remove-btn">
+        <i class="pi pi-trash"></i>
+      </button>
     </div>
     <p class="price">{{ product.price }}$</p>
   </div>
@@ -16,8 +21,8 @@ defineProps(["product"]);
   .product-item{
     height: 5rem;
     padding: 1rem;
-    background-color: #e8f4e8;
-    color: #3d6138;
+    background-color: var(--color-pale-green);
+    color: var(--color-text);
     display: flex;
     flex-direction: column;
   }
@@ -34,11 +39,11 @@ defineProps(["product"]);
     align-items: center;
     justify-content: center;
     border: none;
-    background-color: #54a852;
-    color: #fff;
+    background-color: var(--color-btn-1);
+    color: var(--color-white);
     cursor: pointer;
   }
   .product-item .row-1 .remove-btn:hover{
-    background-color: #3e9a3d;
+    background-color: var(--color-btn-1-hover);
   }
 </style>

@@ -1,14 +1,19 @@
 <script setup>
   import {inject} from "vue";
   import ProductItem from "@/components/ProductItem.vue";
-
+  defineEmits(["remove-product-from-cart"]);
   const state = inject("state");
 </script>
 
 <template>
   <div class="products-list">
     <p class="header">My cart</p>
-    <ProductItem v-for="product in state.products" :key="product.id" :product="product"/>
+      <ProductItem
+          v-for="product in state.products"
+          :key="product.id"
+          :product="product"
+          @remove-product-from-cart="$emit('remove-product-from-cart', product.id)"
+      />
   </div>
 </template>
 

@@ -1,4 +1,6 @@
 <script setup>
+  import DefaultButton from "@/components/buttons/DefaultButton.vue";
+
   defineEmits(['go-to-homepage'])
 </script>
 
@@ -21,7 +23,7 @@
         <p>Dec 15, 2026</p>
       </div>
     </div>
-    <button @click="$emit('go-to-homepage')" class="home-page-btn">Go to Homepage</button>
+    <DefaultButton @click="$emit('go-to-homepage')">Go to Homepage</DefaultButton>
   </div>
 </template>
 
@@ -35,35 +37,25 @@
   }
   .success-payment-section .success-icon{
     font-size: 10rem;
-    color: #56aa54;
+    color: var(--color-btn-1);
   }
   .success-payment-section .success-header{
-    color: #557c4e;
+    color: var(--color-text);
     font-size: 2rem;
   }
   .success-payment-section .success-description{
     font-size: 1.1rem;
-    color: #557c4e;
+    color: var(--color-text);
   }
   .success-payment-section .payment-info{
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: #56aa54;
+    color: var(--color-text);
   }
   .success-payment-section .payment-info .row{
     display: flex;
     width: 20rem;
     justify-content: space-between;
   }
-  .success-payment-section .home-page-btn{
-    border: none;
-    width: 20rem;
-    height: 2rem;
-    background-color: #56aa54;
-    color: #ffffff;
-    border-radius: 0.2rem;
-  }
-
-
 </style>
