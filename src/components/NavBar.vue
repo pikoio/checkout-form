@@ -17,7 +17,7 @@ defineEmits(['toggle-cart'])
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
-  background-color: var(--color-white);
+  background-color: transparent;
 }
 
 .nav-bar .logo {

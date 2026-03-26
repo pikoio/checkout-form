@@ -19,7 +19,7 @@
 
 <style scoped>
   .products-list {
-    width: 35%;
+    width: 30%;
     display: flex;
     flex-direction: column;
     gap: 1rem;

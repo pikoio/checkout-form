@@ -1,11 +1,11 @@
 
 /* semantic color variables for this project */
 :root {
-  --color-background: #ffffff;
+  --color-background: #e8e8e8;
   --color-text: #437c33;
   --color-btn-1: #73a563;
   --color-btn-1-hover: #699c58;
-  --color-pale-green: #e6f2e6;
+  --color-pale-green: #b3cdb3;
   --color-pale-red: #ed4c4c;
   --color-white: #ffffff;
   --color-grey: #ececec;
@@ -31,5 +31,8 @@ body {
 button {
   border: none;
   cursor: pointer;
+}
+input{
+  border: none;
 }
 
