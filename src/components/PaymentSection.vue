@@ -1,47 +1,120 @@
 <script setup>
 import DefaultButton from "@/components/buttons/DefaultButton.vue";
-import {computed, ref, watch} from "vue";
+import {computed, reactive, ref, watch} from "vue";
 
 defineEmits(['payment-success'])
 
-const cardCredentials = ref({
-  number: "",
-  expDate: "",
-  cvc: undefined,
-  name: ""
-})
-
-const currentYear = new Date().getFullYear() % 100
-
-const tempExpDate = ref({
+const tempExpDate = reactive({
   month: "",
   year: ""
 })
 
-// Number
-watch(
-    () => cardCredentials.value.number,
-    (newNumber, oldNumber) => {
-      let rawNumber  = newNumber.toString().replace(/\D/g, '')
-      cardCredentials.value.number = newNumber.toString().length > 19 ? oldNumber : rawNumber
+const currentYear = new Date().getFullYear() % 100
+const cardCredentials = ref({
+  number: "",
+  expDate: {
+    month: undefined,
+    year: undefined
+  },
+  cvc: "",
+  name: ""
+})
+
+const errors = reactive({
+  number: "",
+  cvc: "",
+  name: "",
+  expDate: ""
+})
+const isFormValid = reactive({
+  number: false,
+  cvc: false,
+  name: false,
+  expMonth: false,
+  expYear: false
+})
+
+const validateFormInput = (type) => {
+  switch(type){
+    case "number":{
+      let rawValue = cardCredentials.value.number.toString().replace(/\D/g, '')
+      isFormValid.number = false
+        if(rawValue.length === 0){
+          errors.number = "Please enter a card number"
+          cardCredentials.value.number = ""
+          break
+        }
+        if(rawValue.length < 16){
+          errors.number = "Card number is too short"
+          cardCredentials.value.number = rawValue
+          break
+        }
+        if(rawValue.length > 16){
+          cardCredentials.value.number = rawValue.slice(0, 16)
+        }
+        errors.number = ""
+      isFormValid.number = true
+      break
     }
-)
-// CVC
-watch(
-    () => cardCredentials.value.cvc,
-    (newCVC, oldCVC) => {
-      cardCredentials.value.cvc = newCVC.toString().length > 3 ? oldCVC : newCVC
+    case "cvc":{
+      let rawValue = cardCredentials.value.cvc.toString().replace(/\D/g, '')
+      isFormValid.cvc = false
+      if(rawValue.length === 0){
+        errors.cvc = "Please enter cvc"
+        cardCredentials.value.cvc = ""
+        break
+      }
+      if(rawValue.length < 3){
+        errors.cvc = "CVC is too short"
+        cardCredentials.value.cvc = rawValue
+        break
+      }
+      if(rawValue.length > 3){
+        cardCredentials.value.cvc = rawValue.slice(0, 3)
+      }
+      errors.cvc = ""
+      isFormValid.cvc = true
+      break
     }
-)
-// Cardholder name
-watch(
-    () => cardCredentials.value.name,
-    (newCardholderName, oldCardholderName) => {
-      let rawCardHolderName = newCardholderName.toString().replace(/[^a-zA-Z\s]/g, '')
-      cardCredentials.value.name = newCardholderName.toString().length > 20 ? oldCardholderName : rawCardHolderName
-      cardCredentials.value.name = cardCredentials.value.name.toString().toUpperCase()
+    case "name":{
+      let rawValue = cardCredentials.value.name.toString().replace(/[^a-zA-Z\s]/g, '').toUpperCase()
+      isFormValid.name = false
+      if(rawValue.length === 0){
+        errors.name = "Please enter Cardholder name"
+        cardCredentials.value.name = ""
+        break
+      }
+
+      if(rawValue.length > 26){
+        cardCredentials.value.name = rawValue.slice(0, 26)
+        break
+      }
+      cardCredentials.value.name = rawValue
+      errors.name = ""
+      isFormValid.name = true
+      break
     }
-)
+    case "expDate":{
+      console.log(cardCredentials.value.expDate.month, cardCredentials.value.expDate.year)
+      isFormValid.expMonth = false
+      if(isFormValid.expMonth < 1 && isFormValid.expMonth > 12){
+        errors.expDate = "Invalid expiration month"
+        break
+      }
+      if(isFormValid.expYear < currentYear && isFormValid.expYear > currentYear + 10){
+        errors.expDate = "Invalid expiration year"
+        break
+      }
+      isFormValid.expMonth = true
+      isFormValid.expYear = true
+      errors.expDate = ""
+      break
+    }
+  }
+}
+const isPaymentFormValid = computed(() => {
+  return isFormValid.name && isFormValid.cvc && isFormValid.number && isFormValid.expMonth && isFormValid.expYear
+})
 
 </script>
 
@@ -58,23 +131,25 @@ watch(
           <div class="row-1">
             <label>Card number</label>
             <input
+                @input="validateFormInput('number')"
                 type="text"
                 v-model="cardCredentials.number"
+                :class="{invalid: errors.number}"
             >
           </div>
           <div class="row-2">
             <div class="expiration-date">
               <label>Expiration date</label>
-              <select v-model="tempExpDate.month">
-                <option value="" disabled>MM</option>
+              <select @change="validateFormInput('expDate')" v-model="cardCredentials.expDate.month">
+                <option :value=undefined disabled>MM</option>
                 <option v-for="month in 12" :value="month">{{ month }}</option>
               </select>
               <slot>/</slot>
-              <select v-model="tempExpDate.year">
-                <option value="" disabled>YY</option>
+              <select @change="validateFormInput('expDate')" v-model="cardCredentials.expDate.year">
+                <option :value=undefined disabled>YY</option>
                 <option
                     v-for="n in 11"
-                    :value="currentYear + (n - 1)">
+                    :value="currentYear + (n - 1) + 2000">
                   {{ currentYear + (n - 1) }}
                 </option>
               </select>
@@ -82,24 +157,28 @@ watch(
             <div class="cvc">
               <label>CVC</label>
               <input
-                  type="number"
+                  @input="validateFormInput('cvc')"
                   placeholder="999"
                   v-model.number.trim="cardCredentials.cvc"
+                  :class="{invalid: errors.cvc}"
               >
             </div>
           </div>
           <div class="row-3">
             <label>Cardholder name</label>
             <input
+                @input="validateFormInput('name')"
                 type="text"
                 placeholder="CARDHOLDER NAME"
                 v-model="cardCredentials.name"
+                :class="{invalid: errors.name}"
             >
           </div>
         </div>
       </div>
-      <DefaultButton :width="'80%'" :height="'3rem'">Pay 500$</DefaultButton>
+      <DefaultButton :disabled="isPaymentFormValid" :width="'80%'" :height="'3rem'">Pay 500$</DefaultButton>
     </form>
+    {{ isFormValid}}
   </div>
 </template>
 
@@ -121,6 +200,9 @@ watch(
     height: 2.5rem;
     border-radius: 0.5rem;
     padding: 1rem;
+  }
+  .payment-section .payment-form input.invalid{
+    border: 1.5px solid red
   }
   .payment-section .payment-form select{
     height: 2.5rem;
