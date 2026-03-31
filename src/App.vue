@@ -5,7 +5,36 @@ import CartSection from "@/components/CartSection.vue";
 import NavBar from "@/components/NavBar.vue";
 
 const state = ref({
-  products: []
+  products: [
+    {
+      id: 1,
+      name: "Grape juice",
+      description: "Grape juice from USA",
+      price: 10,
+      cardColor: "#805a98",
+      isInState: false,
+      icon: "pi pi-sun"
+
+    },
+    {
+      id: 2,
+      name: "Apple juice",
+      description: "Apple juice from China",
+      price: 20,
+      cardColor: "#ba4e4e",
+      isInState: false,
+      icon: "pi pi-apple"
+    },
+    {
+      id: 3,
+      name: "Orange juice",
+      description: "Orange juice from Japan",
+      price: 30,
+      cardColor: "#d68348",
+      isInState: false,
+      icon: "pi pi-sparkles"
+    }
+  ]
 })
 const products = ref([
   {
@@ -14,7 +43,9 @@ const products = ref([
     description: "Grape juice from USA",
     price: 10,
     cardColor: "#805a98",
-    isInState: false
+    isInState: false,
+    icon: "pi pi-sun"
+
   },
   {
     id: 2,
@@ -22,7 +53,8 @@ const products = ref([
     description: "Apple juice from China",
     price: 20,
     cardColor: "#ba4e4e",
-    isInState: false
+    isInState: false,
+    icon: "pi pi-apple"
   },
   {
     id: 3,
@@ -30,7 +62,8 @@ const products = ref([
     description: "Orange juice from Japan",
     price: 30,
     cardColor: "#d68348",
-    isInState: false
+    isInState: false,
+    icon: "pi pi-sparkles"
   }
 ])
 const isCartOpen = ref(true)

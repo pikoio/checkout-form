@@ -1,9 +1,12 @@
 <script setup>
-const props = defineProps(["width", "height"])
+const props = defineProps({
+  width: { type: String, default: '100%' },
+  height: { type: String, default: '2.5rem' },
+})
 </script>
 
 <template>
-  <button :style="{width: props.width || '100%', height: props.height || '2.5rem' }" class="default-button">
+  <button :style="{width: props.width, height: props.height }" class="default-button">
     <slot/>
   </button>
 </template>

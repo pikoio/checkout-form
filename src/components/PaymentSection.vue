@@ -18,9 +18,6 @@ const tempExpDate = ref({
   year: ""
 })
 
-const validateCardNumber = computed(() => {
-
-})
 // Number
 watch(
     () => cardCredentials.value.number,

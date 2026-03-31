@@ -25,6 +25,7 @@
     gap: 1rem;
     overflow: auto;
     padding: 1rem;
+    align-items: end;
   }
   .products-list .header{
     font-size: 1.4rem;
