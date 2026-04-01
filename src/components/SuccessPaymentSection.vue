@@ -1,6 +1,5 @@
 <script setup>
   import DefaultButton from "@/components/buttons/DefaultButton.vue";
-
   defineEmits(['go-to-homepage'])
 </script>
 

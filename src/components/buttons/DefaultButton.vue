@@ -11,9 +11,9 @@ const props = defineProps({
 <template>
   <button
       class="default-button"
-      :class="{disabled: !props.disabled}"
+      :class="{disabled: props.disabled}"
       :style="{ width: props.width, height: props.height }"
-      :disabled="!props.disabled">
+      :disabled="props.disabled">
     <slot/>
   </button>
 </template>

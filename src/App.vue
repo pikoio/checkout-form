@@ -1,40 +1,11 @@
 <script setup>
 import ProductsWrapper from "@/components/ProductsWrapper.vue";
-import {provide, ref} from "vue";
+import {computed, provide, ref} from "vue";
 import CartSection from "@/components/CartSection.vue";
 import NavBar from "@/components/NavBar.vue";
 
 const state = ref({
-  products: [
-    {
-      id: 1,
-      name: "Grape juice",
-      description: "Grape juice from USA",
-      price: 10,
-      cardColor: "#805a98",
-      isInState: false,
-      icon: "pi pi-sun"
-
-    },
-    {
-      id: 2,
-      name: "Apple juice",
-      description: "Apple juice from China",
-      price: 20,
-      cardColor: "#ba4e4e",
-      isInState: false,
-      icon: "pi pi-apple"
-    },
-    {
-      id: 3,
-      name: "Orange juice",
-      description: "Orange juice from Japan",
-      price: 30,
-      cardColor: "#d68348",
-      isInState: false,
-      icon: "pi pi-sparkles"
-    }
-  ]
+  products: []
 })
 const products = ref([
   {
@@ -66,6 +37,14 @@ const products = ref([
     icon: "pi pi-sparkles"
   }
 ])
+
+const productsTotalPrice = computed(() => {
+  return state.value.products.reduce((acc, product) => {
+    return acc + product.price
+  }, 0)
+})
+provide("productsTotalPrice", productsTotalPrice)
+
 const isCartOpen = ref(true)
 provide("products", products)
 provide("state", state)
